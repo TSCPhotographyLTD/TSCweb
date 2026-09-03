@@ -90,11 +90,70 @@ All Rights Reserved
 
   .slide.active { opacity: 1; }
 
-  .slide img {
+    .slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: zoom-in;
     filter: grayscale(15%) contrast(1.05);
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    filter: none;
+    cursor: default;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--fg);
+    cursor: pointer;
+  }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(198,196,189,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .lightbox-arrow:hover {
+    border-color: var(--accent);
+    background: rgba(122,15,35,0.3);
+  }
+  .lightbox-arrow.prev { left: 2rem; }
+  .lightbox-arrow.next { right: 2rem; }
+  .lightbox-arrow svg { width: 18px; height: 18px; }
+
+  @media (max-width: 640px) {
+    .lightbox-arrow { width: 38px; height: 38px; }
+    .lightbox-arrow.prev { left: 0.75rem; }
+    .lightbox-arrow.next { right: 0.75rem; }
+    .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2rem; }
   }
 
   .slide::after {
@@ -311,23 +370,23 @@ All Rights Reserved
 <section class="hero" id="hero">
 
   <!-- SLIDES: replace src with your own image paths, e.g. "images/01.jpg" -->
-   <div class="slide active">
-    <img src="Landscape/MountGould-1.jpg" alt="Huge Majestic Mountain, Glacier National Park, Mount Gould, Montana, USA, Summer,">
+  <div class="slide active">
+    <img src="Landscape/MountGould-1.jpg" alt="Huge Majestic Mountain, Glacier National Park, Mount Gould, Montana, USA, Summer," onclick="openLightbox(0)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-2.jpg" alt="Portrait photograph with flowers, TSC Photography">
+    <img src="Hero/hero-2.jpg" alt="Portrait photograph with flowers, TSC Photography" onclick="openLightbox(1)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-3.jpg" alt="Featured photograph, TSC Photography">
+    <img src="Hero/hero-3.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(2)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-4.jpg" alt="Featured photograph, TSC Photography">
+    <img src="Hero/hero-4.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(3)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-5.jpg" alt="Featured photograph, TSC Photography">
+    <img src="Hero/hero-5.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(4)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-6.jpg" alt="Featured photograph, TSC Photography">
+    <img src="Hero/hero-6.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(5)">
   </div>
 
   <div class="hero-content">
@@ -373,7 +432,18 @@ All Rights Reserved
   <div>targetshooterscorner@gmail.com</div>
   <div><a href="https://www.instagram.com/targetshooterscorner/" target="_blank" rel="noopener">IG: Targetshooterscorner</a></div>
 </footer>
-
+  
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <div class="lightbox-arrow prev" onclick="event.stopPropagation(); changeLightboxSlide(-1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </div>
+  <img id="lightbox-img" src="" alt="Full size view" onclick="event.stopPropagation()">
+  <div class="lightbox-arrow next" onclick="event.stopPropagation(); changeLightboxSlide(1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </div>
+</div>
+  
 <script>
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
@@ -409,6 +479,46 @@ All Rights Reserved
   });
 
   startAutoplay();
+    /* ---------- LIGHTBOX ---------- */
+  const heroImages = Array.from(document.querySelectorAll('.slide img')).map(img => ({
+    src: img.getAttribute('src'),
+    alt: img.getAttribute('alt')
+  }));
+
+  let lightboxIndex = 0;
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  function openLightbox(i) {
+    clearInterval(timer);
+    lightboxIndex = i;
+    updateLightboxImage();
+    lightbox.classList.add('active');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    startAutoplay();
+  }
+
+  function changeLightboxSlide(direction) {
+    lightboxIndex = (lightboxIndex + direction + heroImages.length) % heroImages.length;
+    updateLightboxImage();
+  }
+
+  function updateLightboxImage() {
+    lightboxImg.src = heroImages[lightboxIndex].src;
+    lightboxImg.alt = heroImages[lightboxIndex].alt;
+  }
+
+  lightbox.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeLightboxSlide(-1);
+    if (e.key === 'ArrowRight') changeLightboxSlide(1);
+  });
 </script>
 
 </body>
