@@ -21,17 +21,17 @@ All Rights Reserved
     --serif: 'Fraunces', Georgia, serif;
     --sans: 'Inter', Helvetica, Arial, sans-serif;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   html, body {
     background: var(--bg);
     color: var(--fg);
     font-family: var(--sans);
   }
-
+ 
   a { color: inherit; text-decoration: none; }
-
+ 
   header.masthead {
     position: sticky;
     top: 0;
@@ -44,41 +44,41 @@ All Rights Reserved
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
   }
-
+ 
   .masthead .name {
     font-family: var(--serif);
     font-size: 1.15rem;
     font-weight: 500;
   }
-
+ 
   .masthead nav { display: flex; gap: 2.25rem; font-size: 0.85rem; font-weight: 500; }
   .masthead nav a { opacity: 0.85; transition: opacity 0.2s ease; }
   .masthead nav a:hover, .masthead nav a.current { opacity: 1; color: var(--accent); }
-
+ 
   .page-head {
     padding: 5rem 2.5rem 3rem;
     max-width: 1200px;
     margin: 0 auto;
   }
-
+ 
   .page-head .eyebrow-line {
     width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.25rem;
   }
-
+ 
   .page-head h1 {
     font-family: var(--serif);
     font-weight: 500;
     font-size: clamp(2.2rem, 5vw, 3.4rem);
     line-height: 1.05;
   }
-
+ 
   .page-head p {
     margin-top: 1rem;
     color: var(--fg-dim);
     max-width: 55ch;
     line-height: 1.6;
   }
-
+ 
   /* ---------- GALLERY GRID ---------- */
   .gallery {
     max-width: 1200px;
@@ -87,7 +87,7 @@ All Rights Reserved
     columns: 3 320px;
     column-gap: 1rem;
   }
-
+ 
   .gallery figure {
     break-inside: avoid;
     margin-bottom: 1rem;
@@ -95,19 +95,78 @@ All Rights Reserved
     overflow: hidden;
     border-radius: 3px;
   }
-
+ 
   .gallery img {
     width: 100%;
     display: block;
+    cursor: zoom-in;
     filter: grayscale(10%) contrast(1.03);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
   }
-
+ 
   .gallery figure:hover img {
     transform: scale(1.03);
     filter: grayscale(0%) contrast(1.03);
   }
-
+ 
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    filter: none;
+    cursor: default;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--fg);
+    cursor: pointer;
+  }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(198,196,189,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .lightbox-arrow:hover {
+    border-color: var(--accent);
+    background: rgba(122,15,35,0.25);
+  }
+  .lightbox-arrow.prev { left: 2rem; }
+  .lightbox-arrow.next { right: 2rem; }
+  .lightbox-arrow svg { width: 18px; height: 18px; }
+ 
+  @media (max-width: 720px) {
+    .lightbox-arrow { width: 38px; height: 38px; }
+    .lightbox-arrow.prev { left: 0.75rem; }
+    .lightbox-arrow.next { right: 0.75rem; }
+    .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2rem; }
+  }
+ 
   footer {
     padding: 2.5rem;
     max-width: 1200px;
@@ -118,13 +177,13 @@ All Rights Reserved
     color: var(--fg-dim);
     border-top: 1px solid var(--line);
   }
-
+ 
   footer a {
     color: var(--fg-dim);
     transition: color 0.2s ease;
   }
   footer a:hover { color: var(--accent); }
-
+ 
   @media (max-width: 720px) {
     .masthead { padding: 1.25rem; }
     .masthead nav { gap: 1.1rem; font-size: 0.75rem; }
@@ -135,7 +194,7 @@ All Rights Reserved
 </style>
 </head>
 <body>
-
+ 
 <header class="masthead">
   <div class="name">TSC Photography LTD</div>
   <nav>
@@ -145,62 +204,114 @@ All Rights Reserved
     <a href="index.html#contact">Contact</a>
   </nav>
 </header>
-
+ 
 <div class="page-head">
   <div class="eyebrow-line"></div>
   <h1>Nature</h1>
   <p>Landscapes and wildlife, shot in the field.</p>
 </div>
-
+ 
 <div class="gallery">
-
+ 
   <figure>
-    <img src="Landscape/GNP-4887.jpg" alt="Glacier National Park landscape">
+    <img src="Landscape/GNP-4887.jpg" alt="Glacier National Park landscape" onclick="openLightbox(0)">
   </figure>
   <figure>
-    <img src="Landscape/MountGould-1.jpg" alt="Mount Gould landscape">
+    <img src="Landscape/MountGould-1.jpg" alt="Mount Gould landscape" onclick="openLightbox(1)">
   </figure>
   <figure>
-    <img src="Wildlife/AndeanCondor-1.jpg" alt="Andean condor">
+    <img src="Wildlife/AndeanCondor-1.jpg" alt="Andean condor" onclick="openLightbox(2)">
   </figure>
   <figure>
-    <img src="Wildlife/AndeanCondor-2.jpg" alt="Andean condor">
+    <img src="Wildlife/AndeanCondor-2.jpg" alt="Andean condor" onclick="openLightbox(3)">
   </figure>
   <figure>
-    <img src="Wildlife/AndeanCondor-3.jpg" alt="Andean condor">
+    <img src="Wildlife/AndeanCondor-3.jpg" alt="Andean condor" onclick="openLightbox(4)">
   </figure>
   <figure>
-    <img src="Wildlife/AndeanCondor-4.jpg" alt="Andean condor">
+    <img src="Wildlife/AndeanCondor-4.jpg" alt="Andean condor" onclick="openLightbox(5)">
   </figure>
   <figure>
-    <img src="Wildlife/BaldEagleCampPerry-1.jpg" alt="Bald eagle at Camp Perry">
+    <img src="Wildlife/BaldEagleCampPerry-1.jpg" alt="Bald eagle at Camp Perry" onclick="openLightbox(6)">
   </figure>
   <figure>
-    <img src="Wildlife/BaldEagleCampPerry-2.jpg" alt="Bald eagle at Camp Perry">
+    <img src="Wildlife/BaldEagleCampPerry-2.jpg" alt="Bald eagle at Camp Perry" onclick="openLightbox(7)">
   </figure>
   <figure>
-    <img src="Wildlife/BaldEagleKFNP_Resize.jpg" alt="Bald eagle">
+    <img src="Wildlife/BaldEagleKFNP_Resize.jpg" alt="Bald eagle" onclick="openLightbox(8)">
   </figure>
   <figure>
-    <img src="Wildlife/BaldEaglePair.jpg" alt="Pair of bald eagles">
+    <img src="Wildlife/BaldEaglePair.jpg" alt="Pair of bald eagles" onclick="openLightbox(9)">
   </figure>
   <figure>
-    <img src="Wildlife/BaldEaglePair-2.jpg" alt="Pair of bald eagles">
+    <img src="Wildlife/BaldEaglePair-2.jpg" alt="Pair of bald eagles" onclick="openLightbox(10)">
   </figure>
   <figure>
-    <img src="Wildlife/BlueHeron.jpg" alt="Blue heron">
+    <img src="Wildlife/BlueHeron.jpg" alt="Blue heron" onclick="openLightbox(11)">
   </figure>
   <figure>
-    <img src="Wildlife/GNP-5121.jpg" alt="Glacier National Park wildlife">
+    <img src="Wildlife/GNP-5121.jpg" alt="Glacier National Park wildlife" onclick="openLightbox(12)">
   </figure>
-
+ 
 </div>
-
+ 
 <footer id="contact">
   <div>© 2026 TSC Photography LTD</div>
   <div>targetshooterscorner@gmail.com</div>
   <div><a href="https://www.instagram.com/targetshooterscorner/" target="_blank" rel="noopener">IG: Targetshooterscorner</a></div>
 </footer>
-
+ 
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <div class="lightbox-arrow prev" onclick="event.stopPropagation(); changeSlide(-1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </div>
+  <img id="lightbox-img" src="" alt="Full size view" onclick="event.stopPropagation()">
+  <div class="lightbox-arrow next" onclick="event.stopPropagation(); changeSlide(1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </div>
+</div>
+ 
+<script>
+  const galleryImages = Array.from(document.querySelectorAll('.gallery img')).map(img => ({
+    src: img.getAttribute('src'),
+    alt: img.getAttribute('alt')
+  }));
+ 
+  let currentIndex = 0;
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+ 
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightboxImage();
+    lightbox.classList.add('active');
+  }
+ 
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+  }
+ 
+  function changeSlide(direction) {
+    currentIndex = (currentIndex + direction + galleryImages.length) % galleryImages.length;
+    updateLightboxImage();
+  }
+ 
+  function updateLightboxImage() {
+    lightboxImg.src = galleryImages[currentIndex].src;
+    lightboxImg.alt = galleryImages[currentIndex].alt;
+  }
+ 
+  lightbox.addEventListener('click', closeLightbox);
+ 
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+  });
+</script>
+ 
 </body>
 </html>
+ 
