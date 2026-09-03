@@ -1,1 +1,2 @@
-This is for Self employed Photographer Webpage deployment; extremely low budget, portfolio  view, and basic contact me buttons.  
+Drafting and testing functionality, before pushing to main 
+
