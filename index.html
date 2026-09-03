@@ -14,7 +14,8 @@
     --accent: #c41e3a;
     --serif: 'Fraunces', Georgia, serif;
     --sans: 'Inter', Helvetica, Arial, sans-serif;
-  }
+ 
+}
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -269,10 +270,15 @@
     border-top: 1px solid rgba(242,240,234,0.1);
   }
 
+  footer a {
+    color: var(--fg-dim);
+    transition: color 0.2s ease;
+  }
+  footer a:hover { color: var(--accent); }
+
   @media (prefers-reduced-motion: reduce) {
     .slide { transition: none; }
   }
-
   @media (max-width: 640px) {
     .masthead { padding: 1.25rem 1.25rem; }
     .masthead nav { gap: 1.25rem; font-size: 0.78rem; }
@@ -358,7 +364,8 @@
 
 <footer id="contact">
   <div>© 2026 TSC Photography LTD</div>
-  <div>hello@tscphotography.com</div>
+  <div>targetshooterscorner@gmail.com</div>
+  <div><a href="https://www.instagram.com/targetshooterscorner/" target="_blank" rel="noopener">IG: Targetshooterscorner</a></div>
 </footer>
 
 <script>
