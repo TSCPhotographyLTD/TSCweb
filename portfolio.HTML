@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — TSC Photography LTD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --fg: #f2f0ea;
+    --fg-dim: #a8a6a0;
+    --accent: #c41e3a;
+    --line: rgba(242,240,234,0.1);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  header.masthead {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem 2.5rem;
+    background: rgba(11,11,12,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .masthead .name {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+
+  .masthead nav { display: flex; gap: 2.25rem; font-size: 0.85rem; font-weight: 500; }
+  .masthead nav a { opacity: 0.85; transition: opacity 0.2s ease; }
+  .masthead nav a:hover, .masthead nav a.current { opacity: 1; color: var(--accent); }
+
+  .page-head {
+    padding: 5rem 2.5rem 3rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .page-head .eyebrow-line {
+    width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.25rem;
+  }
+
+  .page-head h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.05;
+  }
+
+  .page-head p {
+    margin-top: 1rem;
+    color: var(--fg-dim);
+    max-width: 55ch;
+    line-height: 1.6;
+  }
+
+  /* ---------- CATEGORY TILES ---------- */
+  .categories {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tile {
+    position: relative;
+    display: block;
+    height: 46vh;
+    min-height: 320px;
+    border-radius: 4px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(1.05);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  }
+
+  .tile:hover img {
+    transform: scale(1.04);
+    filter: grayscale(0%) contrast(1.05);
+  }
+
+  .tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.65) 100%);
+    z-index: 1;
+  }
+
+  .tile-content {
+    position: absolute;
+    left: 2.5rem;
+    bottom: 2.5rem;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    right: 2.5rem;
+  }
+
+  .tile-content .label {
+    max-width: 60ch;
+  }
+
+  .tile-content .index-num {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--fg-dim);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .tile-content h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 1.05;
+  }
+
+  .tile-content p {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+    color: var(--fg-dim);
+    max-width: 42ch;
+  }
+
+  .tile-content .arrow-cue {
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(242,240,234,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.3s ease;
+  }
+
+  .tile:hover .arrow-cue {
+    border-color: var(--accent);
+    background: rgba(196,30,58,0.15);
+    transform: translateX(4px);
+  }
+
+  .tile-content .arrow-cue svg { width: 18px; height: 18px; }
+
+  .tile:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  footer {
+    padding: 2.5rem;
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--fg-dim);
+    border-top: 1px solid var(--line);
+  }
+
+  footer a {
+    color: var(--fg-dim);
+    transition: color 0.2s ease;
+  }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .masthead { padding: 1.25rem; }
+    .masthead nav { gap: 1.1rem; font-size: 0.75rem; }
+    .page-head { padding: 3.5rem 1.25rem 2rem; }
+    .categories { padding: 1rem 1.25rem 4rem; gap: 1rem; }
+    .tile { height: 38vh; min-height: 260px; }
+    .tile-content { left: 1.25rem; right: 1.25rem; bottom: 1.5rem; }
+    .tile-content .arrow-cue { width: 38px; height: 38px; }
+    footer { flex-direction: column; gap: 0.6rem; padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="name">TSC Photography</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#" class="current">Portfolio</a>
+    <a href="print-shop.html">Print Shop</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="page-head">
+  <div class="eyebrow-line"></div>
+  <h1>The work, sorted.</h1>
+  <p>Three ongoing bodies of work — pick a category to see the full gallery.</p>
+</div>
+
+<div class="categories">
+
+  <!-- replace src with your own category images -->
+  <a class="tile" href="portraiture.html">
+    <img src="https://picsum.photos/id/1027/1600/1000" alt="Portraiture category">
+    <div class="tile-content">
+      <div class="label">
+        <span class="index-num">01</span>
+        <h2>Portraiture</h2>
+        <p>Candid and directed portraits — studio and on location.</p>
+      </div>
+      <div class="arrow-cue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <a class="tile" href="architecture.html">
+    <img src="https://picsum.photos/id/164/1600/1000" alt="Architecture category">
+    <div class="tile-content">
+      <div class="label">
+        <span class="index-num">02</span>
+        <h2>Architecture</h2>
+        <p>Structure, line, and light in built spaces.</p>
+      </div>
+      <div class="arrow-cue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <a class="tile" href="nature.html">
+    <img src="https://picsum.photos/id/15/1600/1000" alt="Nature category">
+    <div class="tile-content">
+      <div class="label">
+        <span class="index-num">03</span>
+        <h2>Nature</h2>
+        <p>Landscapes and close subjects, shot in the field.</p>
+      </div>
+      <div class="arrow-cue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<footer id="contact">
+  <div>© 2026 TSC Photography LTD</div>
+  <div>targetshooterscorner@gmail.com</div>
+  <div><a href="https://www.instagram.com/targetshooterscorner/" target="_blank" rel="noopener">IG: Targetshooterscorner</a></div>
+</footer>
+
+</body>
+</html>
