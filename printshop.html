@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--
+Printshop
+Website for TSC Photography LTD
+Print Shop Page
+By: Andrew H. Walsh
+All Rights Reserved
+-->
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Shop — TSC Photography LTD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F2A44;
+    --fg: #C6C4BD;
+    --fg-dim: #8A93A0;
+    --accent: #7A0F23;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- MASTHEAD (matches index.html) ---------- */
+  header.masthead {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem 2.5rem;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(198,196,189,0.1);
+  }
+
+  .masthead .name {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .masthead nav {
+    display: flex;
+    gap: 2.25rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .masthead nav a {
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+  .masthead nav a:hover { opacity: 1; }
+
+  .masthead nav a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  /* ---------- SECTION BANDING ---------- */
+  .band {
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--fg) 15%, var(--fg) 85%, transparent 100%);
+    opacity: 0.55;
+  }
+
+  .section-alt {
+    background: #16334F; /* slightly lighter navy for alternation */
+  }
+
+  /* ---------- PAGE HEADER ---------- */
+  .page-header {
+    padding: 9.5rem 2.5rem 3rem;
+    background: var(--accent);
+  }
+
+  .page-header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .page-header .eyebrow-line {
+    width: 40px;
+    height: 2px;
+    background: var(--fg);
+    margin-bottom: 1.25rem;
+  }
+
+  .page-header h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.05;
+  }
+
+  .page-header p {
+    margin-top: 1.25rem;
+    color: var(--fg-dim);
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+
+  /* ---------- PRICING SECTION ---------- */
+  .pricing {
+    padding: 1rem 2.5rem 5rem;
+    background: var(--accent);
+  }
+
+  .pricing-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .pricing h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .pricing-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .pricing-table thead th {
+    text-align: left;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(198,196,189,0.25);
+  }
+
+  .pricing-table tbody td {
+    padding: 1.1rem 1rem;
+    border-top: 3px solid var(--bg);
+    border-bottom: 3px solid var(--bg);
+    vertical-align: top;
+  }
+
+  .pricing-table tbody td:first-child {
+    border-left: 3px solid var(--bg);
+  }
+
+  .pricing-table tbody td:last-child {
+    border-right: 3px solid var(--bg);
+  }
+
+  .pricing-table tbody tr:hover {
+    background: rgba(15,42,68,0.25);
+  }
+
+  .pricing-table .size-cell {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--fg);
+  }
+
+  .pricing-table .price-cell {
+    font-weight: 600;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+
+  .pricing-table td[data-label="Min Qty"] {
+    font-size: 0.85rem;
+    color: var(--fg-dim);
+  }
+
+  .pricing-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--fg-dim);
+    line-height: 1.6;
+  }
+
+  .pricing-group {
+    margin-bottom: 3.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .pricing-table thead { display: none; }
+    .pricing-table, .pricing-table tbody, .pricing-table tr, .pricing-table td {
+      display: block;
+      width: 100%;
+    }
+    .pricing-table tr {
+      padding: 1rem;
+      background: var(--bg);
+      border: 3px solid var(--fg);
+      margin-bottom: 0.75rem;
+    }
+    .pricing-table tbody td {
+      border: none;
+      padding: 0.6rem 0;
+    }
+    .pricing-table td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      margin-bottom: 0.15rem;
+    }
+  }
+
+  /* ---------- GALLERY GRID (order samples via lightbox) ---------- */
+  .order-gallery {
+    padding: 1rem 2.5rem 6rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .order-gallery h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .gallery-grid img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    cursor: zoom-in;
+    filter: grayscale(15%) contrast(1.05);
+    transition: filter 0.2s ease;
+  }
+  .gallery-grid img:hover { filter: none; }
+
+  @media (max-width: 640px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-header { padding: 7.5rem 1.25rem 2rem; }
+    .pricing, .order-gallery { padding: 1rem 1.25rem 4rem; }
+  }
+
+  /* ---------- LIGHTBOX (matches index.html) ---------- */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    filter: none;
+    cursor: default;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--fg);
+    cursor: pointer;
+  }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(198,196,189,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .lightbox-arrow:hover {
+    border-color: var(--accent);
+    background: rgba(122,15,35,0.3);
+  }
+  .lightbox-arrow.prev { left: 2rem; }
+  .lightbox-arrow.next { right: 2rem; }
+  .lightbox-arrow svg { width: 18px; height: 18px; }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--fg);
+    max-width: 90vw;
+  }
+  .lightbox-caption span { display: block; line-height: 1.5; }
+  #lightbox-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+  #lightbox-spec, #lightbox-price {
+    font-size: 0.85rem;
+    color: var(--fg-dim);
+  }
+
+  @media (max-width: 640px) {
+    .lightbox-arrow { width: 38px; height: 38px; }
+    .lightbox-arrow.prev { left: 0.75rem; }
+    .lightbox-arrow.next { right: 0.75rem; }
+    .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2rem; }
+  }
+
+  footer {
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--fg);
+    background: var(--accent);
+  }
+  footer a { color: var(--fg-dim); transition: color 0.2s ease; }
+  footer a:hover { color: var(--fg); }
+
+  @media (max-width: 640px) {
+    footer { flex-direction: column; gap: 0.75rem; padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="name">TSC Photography LTD</div>
+  <nav>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="print-shop.html">Print Shop</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="page-header">
+  <div class="page-header-inner">
+    <div class="eyebrow-line"></div>
+    <h1>Print Shop</h1>
+    <p>Archival inkjet prints from the field — portraits, architecture, and nature. Every print is made to order on premium paper stock. Select a size below or reach out for a custom dimension.</p>
+  </div>
+</section>
+
+<div class="band"></div>
+<section class="pricing" id="pricing">
+<div class="pricing-inner">
+
+  <div class="pricing-group">
+    <h2>Standard Prints</h2>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Size</th>
+          <th>Paper</th>
+          <th>Price</th>
+          <th>Min Qty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="size-cell" data-label="Size">4" x 6" or 5" x 7"</td>
+          <td data-label="Paper">Archival matte inkjet</td>
+          <td class="price-cell" data-label="Price">$15</td>
+          <td data-label="Min Qty">Minimum order qty: 10</td>
+        </tr>
+        <tr>
+          <td class="size-cell" data-label="Size">8" x 10"</td>
+          <td data-label="Paper">Archival matte inkjet</td>
+          <td class="price-cell" data-label="Price">$45</td>
+          <td data-label="Min Qty">Minimum order qty: 0</td>
+        </tr>
+        <tr>
+          <td class="size-cell" data-label="Size">11" x 14"</td>
+          <td data-label="Paper">Archival matte inkjet</td>
+          <td class="price-cell" data-label="Price">$95</td>
+          <td data-label="Min Qty">Minimum order qty: 0</td>
+        </tr>
+        <tr>
+          <td class="size-cell" data-label="Size">17" x 22"</td>
+          <td data-label="Paper">Archival matte inkjet</td>
+          <td class="price-cell" data-label="Price">$225</td>
+          <td data-label="Min Qty">Minimum order qty: 0</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pricing-note">All prints are unsigned unless otherwise requested. Custom sizes available on inquiry.</p>
+  </div>
+
+</div>
+</section>
+
+<div class="band"></div>
+<footer id="contact">
+  <div>© 2026 TSC Photography LTD</div>
+  <div>targetshooterscorner@gmail.com</div>
+  <div><a href="https://www.instagram.com/targetshooterscorner/" target="_blank" rel="noopener">IG: Targetshooterscorner</a></div>
+</footer>
+
+</body>
+</html>
