@@ -273,6 +273,176 @@ All Rights Reserved
     line-height: 1.6;
   }
 
+  /* ---------- ORDER FORM ---------- */
+  .order-section {
+    padding: 5rem 2.5rem 6rem;
+    background: var(--bg);
+  }
+
+  .order-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .order-inner h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .order-intro {
+    color: var(--fg-dim);
+    max-width: 65ch;
+    line-height: 1.55;
+    margin-bottom: 2.5rem;
+  }
+
+  .order-block {
+    background: var(--accent);
+    border: 3px solid var(--fg);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .order-block h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg);
+    margin-bottom: 1.25rem;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .field-row.three {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .field label {
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--fg);
+    opacity: 0.8;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid rgba(198,196,189,0.4);
+    padding: 0.6rem 0.75rem;
+    border-radius: 2px;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--fg-dim);
+  }
+
+  .field select option {
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  .btn {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--fg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .btn:hover { opacity: 0.85; }
+
+  .btn-outline {
+    color: var(--fg);
+    background: transparent;
+    border: 2px solid var(--fg);
+  }
+
+  .order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: var(--accent);
+    border: 2px solid var(--fg);
+    padding: 0.85rem 1.1rem;
+  }
+
+  .order-item .item-details {
+    font-size: 0.9rem;
+    color: var(--fg);
+    line-height: 1.5;
+  }
+
+  .order-item .item-details strong {
+    font-family: var(--serif);
+    font-size: 1rem;
+    display: block;
+  }
+
+  .order-item .remove-item {
+    background: none;
+    border: none;
+    color: var(--fg-dim);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.25rem;
+  }
+  .order-item .remove-item:hover { color: var(--fg); }
+
+  .order-empty {
+    color: var(--fg-dim);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  .order-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .order-section { padding: 3.5rem 1.25rem 4rem; }
+    .field-row, .field-row.three { grid-template-columns: 1fr; }
+    .order-actions { justify-content: stretch; }
+    .order-actions .btn { flex: 1; }
+  }
+
   .pricing-note {
     margin-top: 2rem;
     font-size: 0.85rem;
@@ -424,6 +594,7 @@ All Rights Reserved
   <nav>
     <a href="portfolio.html">Portfolio</a>
     <a href="print-shop.html">Print Shop</a>
+    <a href="print-shop.html#order">Order</a>
     <a href="index.html#about">About</a>
     <a href="index.html#contact">Contact</a>
   </nav>
@@ -565,6 +736,101 @@ All Rights Reserved
 </div>
 </section>
 
+<section class="order-section" id="order">
+<div class="order-inner">
+  <h2>Place an Order</h2>
+  <p class="order-intro">Build your order below using images from the <a href="portfolio.html" style="color: var(--fg); text-decoration: underline;">portfolio</a>. When you're ready, click "Email My Order" to send it to us — we'll follow up with an invoice before any printing begins. This form does not charge you or process payment.</p>
+
+  <div class="order-block">
+    <h3>Add a Print to Your Order</h3>
+    <div class="field-row">
+      <div class="field">
+        <label for="imageRef">Image (title or portfolio link)</label>
+        <input type="text" id="imageRef" placeholder="e.g. Mount Gould, Glacier National Park">
+      </div>
+      <div class="field">
+        <label for="tierSelect">Tier</label>
+        <select id="tierSelect" onchange="updateSizeOptions()">
+          <option value="Classic">Classic</option>
+          <option value="Signature">Signature</option>
+          <option value="Fine Art">Fine Art</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row three">
+      <div class="field">
+        <label for="sizeSelect">Size</label>
+        <select id="sizeSelect"></select>
+      </div>
+      <div class="field">
+        <label for="qtySelect">Quantity</label>
+        <input type="number" id="qtySelect" min="1" value="1">
+      </div>
+      <div class="field">
+        <label for="paperRef">Preferred Paper (optional)</label>
+        <input type="text" id="paperRef" placeholder="e.g. Canon Pro Luster">
+      </div>
+    </div>
+    <button class="btn btn-outline" onclick="addOrderItem()">+ Add to Order</button>
+  </div>
+
+  <div class="order-block">
+    <h3>Your Order</h3>
+    <div class="order-items" id="orderItems">
+      <p class="order-empty" id="orderEmptyMsg">No items added yet.</p>
+    </div>
+  </div>
+
+  <div class="order-block">
+    <h3>Your Contact Info</h3>
+    <div class="field-row">
+      <div class="field">
+        <label for="custName">Name</label>
+        <input type="text" id="custName" placeholder="Full name">
+      </div>
+      <div class="field">
+        <label for="custEmail">Email</label>
+        <input type="email" id="custEmail" placeholder="you@example.com">
+      </div>
+    </div>
+
+    <h3 style="margin-top: 1.75rem;">Shipping Address</h3>
+    <div class="field">
+      <label for="custAddress1">Street Address</label>
+      <input type="text" id="custAddress1" placeholder="123 Main St">
+    </div>
+    <div class="field" style="margin-top: 1rem;">
+      <label for="custAddress2">Apt / Suite / Unit (optional)</label>
+      <input type="text" id="custAddress2" placeholder="Apt 4B">
+    </div>
+    <div class="field-row three" style="margin-top: 1rem;">
+      <div class="field">
+        <label for="custCity">City</label>
+        <input type="text" id="custCity" placeholder="Columbus">
+      </div>
+      <div class="field">
+        <label for="custState">State</label>
+        <input type="text" id="custState" placeholder="OH">
+      </div>
+      <div class="field">
+        <label for="custZip">ZIP Code</label>
+        <input type="text" id="custZip" placeholder="43215">
+      </div>
+    </div>
+
+    <div class="field" style="margin-top: 1.75rem;">
+      <label for="custNotes">Notes (optional)</label>
+      <textarea id="custNotes" rows="3" placeholder="Anything else we should know?"></textarea>
+    </div>
+  </div>
+
+  <div class="order-actions">
+    <button class="btn" onclick="sendOrderEmail()">Email My Order</button>
+  </div>
+
+</div>
+</section>
+
 <div class="band"></div>
 <footer id="contact">
   <div>© 2026 TSC Photography LTD</div>
@@ -586,6 +852,115 @@ All Rights Reserved
       document.getElementById('tier-' + tab.dataset.tier).classList.add('active');
     });
   });
+
+  /* ---------- ORDER FORM LOGIC ---------- */
+  const sizesByTier = {
+    "Classic": ['4" x 6" / 5" x 7" (10 print min)', '8.5" x 11"'],
+    "Signature": ['8.5" x 11"', '13" x 19"', '17" x 22"'],
+    "Fine Art": ['4" x 6" (10 print min)', '8" x 10" / 8.5" x 11"', '13" x 19"', '17" x 22"']
+  };
+
+  function updateSizeOptions() {
+    const tier = document.getElementById('tierSelect').value;
+    const sizeSelect = document.getElementById('sizeSelect');
+    sizeSelect.innerHTML = '';
+    sizesByTier[tier].forEach(size => {
+      const opt = document.createElement('option');
+      opt.value = size;
+      opt.textContent = size;
+      sizeSelect.appendChild(opt);
+    });
+  }
+  updateSizeOptions();
+
+  let orderItems = [];
+
+  function addOrderItem() {
+    const image = document.getElementById('imageRef').value.trim();
+    const tier = document.getElementById('tierSelect').value;
+    const size = document.getElementById('sizeSelect').value;
+    const qty = document.getElementById('qtySelect').value || 1;
+    const paper = document.getElementById('paperRef').value.trim();
+
+    if (!image) {
+      alert('Please enter the image title or portfolio link before adding.');
+      return;
+    }
+
+    orderItems.push({ image, tier, size, qty, paper });
+    renderOrderItems();
+
+    document.getElementById('imageRef').value = '';
+    document.getElementById('paperRef').value = '';
+    document.getElementById('qtySelect').value = 1;
+  }
+
+  function removeOrderItem(index) {
+    orderItems.splice(index, 1);
+    renderOrderItems();
+  }
+
+  function renderOrderItems() {
+    const container = document.getElementById('orderItems');
+    container.innerHTML = '';
+
+    if (orderItems.length === 0) {
+      container.innerHTML = '<p class="order-empty" id="orderEmptyMsg">No items added yet.</p>';
+      return;
+    }
+
+    orderItems.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'order-item';
+      div.innerHTML = `
+        <div class="item-details">
+          <strong>${item.image}</strong>
+          ${item.tier} — ${item.size} — Qty: ${item.qty}${item.paper ? ' — Paper: ' + item.paper : ''}
+        </div>
+        <button class="remove-item" onclick="removeOrderItem(${i})" aria-label="Remove item">&times;</button>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function sendOrderEmail() {
+    if (orderItems.length === 0) {
+      alert('Add at least one print to your order before sending.');
+      return;
+    }
+
+    const name = document.getElementById('custName').value.trim();
+    const email = document.getElementById('custEmail').value.trim();
+    const address1 = document.getElementById('custAddress1').value.trim();
+    const address2 = document.getElementById('custAddress2').value.trim();
+    const city = document.getElementById('custCity').value.trim();
+    const state = document.getElementById('custState').value.trim();
+    const zip = document.getElementById('custZip').value.trim();
+    const notes = document.getElementById('custNotes').value.trim();
+
+    let body = 'New Print Order Request\n\n';
+    body += 'Name: ' + (name || '(not provided)') + '\n';
+    body += 'Email: ' + (email || '(not provided)') + '\n\n';
+    body += 'Shipping Address:\n';
+    body += (address1 || '(not provided)') + '\n';
+    if (address2) body += address2 + '\n';
+    body += [city, state, zip].filter(Boolean).join(', ') + '\n\n';
+    body += 'Order Items:\n';
+    orderItems.forEach((item, i) => {
+      body += (i + 1) + '. ' + item.image + ' — ' + item.tier + ' — ' + item.size + ' — Qty: ' + item.qty;
+      if (item.paper) body += ' — Paper: ' + item.paper;
+      body += '\n';
+    });
+    if (notes) {
+      body += '\nNotes:\n' + notes + '\n';
+    }
+    body += '\n(This is an order request only. No payment has been made. An invoice will follow.)';
+
+    const subject = 'Print Order Request — ' + (name || 'New Customer');
+    const mailtoLink = 'mailto:targetshooterscorner@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoLink;
+  }
 </script>
 
 </body>
