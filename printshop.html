@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <!--
-Printshop
 Website for TSC Photography LTD
 Print Shop Page
 By: Andrew H. Walsh
@@ -135,97 +134,157 @@ All Rights Reserved
     margin-bottom: 1.75rem;
   }
 
-  .pricing-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 0.75rem;
-    font-size: 0.95rem;
+  /* ---------- TIER TABS ---------- */
+  .tier-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
   }
 
-  .pricing-table thead th {
-    text-align: left;
+  .tier-tab {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--fg);
+    background: transparent;
+    border: 2px solid var(--fg);
+    padding: 0.65rem 1.4rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .tier-tab:hover {
+    background: rgba(198,196,189,0.15);
+  }
+
+  .tier-tab.active {
+    background: var(--fg);
+    color: var(--accent);
+  }
+
+  .tier-panel {
+    display: none;
+  }
+
+  .tier-panel.active {
+    display: block;
+  }
+
+  .tier-intro {
+    color: var(--fg);
+    opacity: 0.9;
+    margin-bottom: 1.75rem;
+    max-width: 65ch;
+    line-height: 1.55;
+  }
+
+  /* ---------- PRICE CARDS ---------- */
+  .price-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .price-card {
+    background: var(--bg);
+    border: 3px solid var(--fg);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .price-card .size-line {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--fg);
+    margin-bottom: 0.85rem;
+  }
+
+  .price-card .size-line .min-note {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--fg-dim);
+    font-style: normal;
+    margin-left: 0.5rem;
+  }
+
+  .price-card .qty-breaks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+  }
+
+  .price-card .qty-breaks span {
+    font-size: 0.95rem;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+
+  .price-card .qty-breaks .each {
+    color: var(--fg-dim);
+    font-size: 0.82rem;
+  }
+
+  .paper-list {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(198,196,189,0.3);
+  }
+
+  .paper-list h3 {
     font-family: var(--sans);
     font-weight: 600;
     font-size: 0.78rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--fg-dim);
-    padding: 0.9rem 1rem;
-    border-bottom: 1px solid rgba(198,196,189,0.25);
-  }
-
-  .pricing-table tbody td {
-    padding: 1.1rem 1rem;
-    border-top: 3px solid var(--bg);
-    border-bottom: 3px solid var(--bg);
-    vertical-align: top;
-  }
-
-  .pricing-table tbody td:first-child {
-    border-left: 3px solid var(--bg);
-  }
-
-  .pricing-table tbody td:last-child {
-    border-right: 3px solid var(--bg);
-  }
-
-  .pricing-table tbody tr:hover {
-    background: rgba(15,42,68,0.25);
-  }
-
-  .pricing-table .size-cell {
-    font-family: var(--serif);
-    font-size: 1.05rem;
     color: var(--fg);
+    opacity: 0.85;
+    margin-bottom: 0.75rem;
   }
 
-  .pricing-table .price-cell {
-    font-weight: 600;
+  .paper-list ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .paper-list li {
+    font-size: 0.9rem;
     color: var(--fg);
-    white-space: nowrap;
+    opacity: 0.85;
+    padding-left: 1rem;
+    position: relative;
   }
 
-  .pricing-table td[data-label="Min Qty"] {
-    font-size: 0.85rem;
+  .paper-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
     color: var(--fg-dim);
   }
 
-  .pricing-note {
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-    color: var(--fg-dim);
+  .paper-list p {
+    font-size: 0.9rem;
+    color: var(--fg);
+    opacity: 0.85;
     line-height: 1.6;
   }
 
-  .pricing-group {
-    margin-bottom: 3.5rem;
+  .pricing-note {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--fg);
+    opacity: 0.75;
+    line-height: 1.6;
   }
 
   @media (max-width: 640px) {
-    .pricing-table thead { display: none; }
-    .pricing-table, .pricing-table tbody, .pricing-table tr, .pricing-table td {
-      display: block;
-      width: 100%;
-    }
-    .pricing-table tr {
-      padding: 1rem;
-      background: var(--bg);
-      border: 3px solid var(--fg);
-      margin-bottom: 0.75rem;
-    }
-    .pricing-table tbody td {
-      border: none;
-      padding: 0.6rem 0;
-    }
-    .pricing-table td::before {
-      content: attr(data-label);
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--fg-dim);
-      margin-bottom: 0.15rem;
-    }
+    .tier-tabs { gap: 0.5rem; }
+    .tier-tab { padding: 0.55rem 1.1rem; font-size: 0.78rem; }
+    .price-card { padding: 1rem 1.1rem; }
   }
 
   /* ---------- GALLERY GRID (order samples via lightbox) ---------- */
@@ -382,46 +441,126 @@ All Rights Reserved
 <section class="pricing" id="pricing">
 <div class="pricing-inner">
 
-  <div class="pricing-group">
-    <h2>Standard Prints</h2>
-    <table class="pricing-table">
-      <thead>
-        <tr>
-          <th>Size</th>
-          <th>Paper</th>
-          <th>Price</th>
-          <th>Min Qty</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="size-cell" data-label="Size">4" x 6" or 5" x 7"</td>
-          <td data-label="Paper">Archival matte inkjet</td>
-          <td class="price-cell" data-label="Price">$15</td>
-          <td data-label="Min Qty">Minimum order qty: 10</td>
-        </tr>
-        <tr>
-          <td class="size-cell" data-label="Size">8" x 10"</td>
-          <td data-label="Paper">Archival matte inkjet</td>
-          <td class="price-cell" data-label="Price">$45</td>
-          <td data-label="Min Qty">Minimum order qty: 0</td>
-        </tr>
-        <tr>
-          <td class="size-cell" data-label="Size">11" x 14"</td>
-          <td data-label="Paper">Archival matte inkjet</td>
-          <td class="price-cell" data-label="Price">$95</td>
-          <td data-label="Min Qty">Minimum order qty: 0</td>
-        </tr>
-        <tr>
-          <td class="size-cell" data-label="Size">17" x 22"</td>
-          <td data-label="Paper">Archival matte inkjet</td>
-          <td class="price-cell" data-label="Price">$225</td>
-          <td data-label="Min Qty">Minimum order qty: 0</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="pricing-note">All prints are unsigned unless otherwise requested. Custom sizes available on inquiry.</p>
+  <div class="tier-tabs" role="tablist">
+    <button class="tier-tab active" data-tier="classic" role="tab" aria-selected="true">Classic Tier</button>
+    <button class="tier-tab" data-tier="signature" role="tab" aria-selected="false">Signature Tier</button>
+    <button class="tier-tab" data-tier="fineart" role="tab" aria-selected="false">Fine Art Tier</button>
   </div>
+
+  <div class="tier-panel active" id="tier-classic">
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="size-line">4" x 6" / 5" x 7"<span class="min-note">10 print minimum</span></div>
+        <div class="qty-breaks">
+          <span>10 for $20</span>
+          <span>20 for $32</span>
+          <span>30 for $40</span>
+          <span>40 for $40</span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="size-line">8.5" x 11"<span class="min-note">no minimum</span></div>
+        <div class="qty-breaks">
+          <span>1 for $20</span>
+          <span>3 for $45 <span class="each">($15 ea)</span></span>
+          <span>5 for $60 <span class="each">($12 ea)</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="paper-list">
+      <h3>Available Papers</h3>
+      <ul>
+        <li>Canon Photo Paper Plus Glossy II (4×6)</li>
+        <li>Canon Pro Platinum (4×6)</li>
+        <li>Canon Semi-Gloss (5×7)</li>
+        <li>Canon Pro Premium Matte (8.5×11)</li>
+        <li>Canon Pro Platinum (8.5×11)</li>
+        <li>Canon Pro Luster (8.5×11)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tier-panel" id="tier-signature">
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="size-line">8.5" x 11"</div>
+        <div class="qty-breaks">
+          <span>1 for $30</span>
+          <span>3 for $67.50 <span class="each">($22.50 ea)</span></span>
+          <span>5 for $90 <span class="each">($18 ea)</span></span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="size-line">13" x 19"</div>
+        <div class="qty-breaks">
+          <span>1 for $80</span>
+          <span>3 for $180 <span class="each">($60 ea)</span></span>
+          <span>5 for $250 <span class="each">($50 ea)</span></span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="size-line">17" x 22"</div>
+        <div class="qty-breaks">
+          <span>1 for $120</span>
+          <span>3 for $270 <span class="each">($90 ea)</span></span>
+          <span>5 for $375 <span class="each">($75 ea)</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="paper-list">
+      <h3>Available Papers</h3>
+      <ul>
+        <li>Canon Pro Luster (13×19, 17×22)</li>
+        <li>Canon Pro Premium Matte (13×19, 17×22)</li>
+        <li>Canon Pro Semi-Gloss (13×19, 17×22)</li>
+        <li>Canon Fine Art Smooth (8.5×11, 13×19, 17×22)</li>
+        <li>Canon Fine Art Rough (8.5×11, 13×19, 17×22)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tier-panel" id="tier-fineart">
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="size-line">4" x 6"<span class="min-note">10 print minimum</span></div>
+        <div class="qty-breaks">
+          <span>10 for $35</span>
+          <span>20 for $50</span>
+          <span>30 for $70</span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="size-line">8" x 10" / 8.5" x 11"</div>
+        <div class="qty-breaks">
+          <span>1 for $40</span>
+          <span>3 for $105 <span class="each">($35 ea)</span></span>
+          <span>5 for $150 <span class="each">($30 ea)</span></span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="size-line">13" x 19"</div>
+        <div class="qty-breaks">
+          <span>1 for $100</span>
+          <span>3 for $240 <span class="each">($80 ea)</span></span>
+          <span>5 for $300 <span class="each">($60 ea)</span></span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="size-line">17" x 22"</div>
+        <div class="qty-breaks">
+          <span>1 for $150</span>
+          <span>3 for $360 <span class="each">($120 ea)</span></span>
+          <span>5 for $450 <span class="each">($90 ea)</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="paper-list">
+      <h3>Available Papers</h3>
+      <p>All Fine Art prints are made exclusively on Hahnemühle archival papers, including but not limited to Fine Art Baryta, FA Baryta Satin, Photo Rag Metallic, Photo Rag, and textured papers such as William Turner and German Etching. Do you have a specific product in mind? We can accommodate custom requests a small printer profile setup fee applies, and pricing may vary slightly from standard Hahnemühle prints. An estimate is always provided before work begins.</p>
+    </div>
+  </div>
+
+  <p class="pricing-note">Max paper size is 17" x 22". Custom papers and sizes available on inquiry — a small printer profile setup fee may apply.</p>
 
 </div>
 </section>
@@ -432,6 +571,22 @@ All Rights Reserved
   <div>targetshooterscorner@gmail.com</div>
   <div><a href="https://www.instagram.com/targetshooterscorner/" target="_blank" rel="noopener">IG: Targetshooterscorner</a></div>
 </footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tier-tab');
+  const panels = document.querySelectorAll('.tier-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      panels.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      document.getElementById('tier-' + tab.dataset.tier).classList.add('active');
+    });
+  });
+</script>
 
 </body>
 </html>
