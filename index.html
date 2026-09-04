@@ -98,8 +98,9 @@ All Rights Reserved
     cursor: zoom-in;
     filter: grayscale(15%) contrast(1.05);
   }
-
+  
   /* ---------- LIGHTBOX ---------- */
+  
   .lightbox {
     display: none;
     position: fixed;
@@ -150,13 +151,46 @@ All Rights Reserved
   .lightbox-arrow.next { right: 2rem; }
   .lightbox-arrow svg { width: 18px; height: 18px; }
 
+  .lightbox-caption {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--fg);
+    max-width: 90vw;
+  }
+  .lightbox-caption span {
+    display: block;
+    line-height: 1.5;
+  }
+  #lightbox-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+  #lightbox-spec, #lightbox-price {
+    font-size: 0.85rem;
+    color: var(--fg-dim);
+  }
+  #lightbox-order {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+  #lightbox-order:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+  }
+
   @media (max-width: 640px) {
     .lightbox-arrow { width: 38px; height: 38px; }
     .lightbox-arrow.prev { left: 0.75rem; }
     .lightbox-arrow.next { right: 0.75rem; }
     .lightbox-close { top: 1rem; right: 1.25rem; font-size: 2rem; }
   }
-
  .slide::after {
   content: "";
   position: absolute;
@@ -372,23 +406,23 @@ All Rights Reserved
 <section class="hero" id="hero">
 
   <!-- SLIDES: replace src with your own image paths, e.g. "images/01.jpg" -->
-  <div class="slide active">
-    <img src="Landscape/MountGould-1.jpg" alt="Huge Majestic Mountain, Glacier National Park, Mount Gould, Montana, USA, Summer," onclick="openLightbox(0)">
+    <div class="slide active">
+    <img src="Landscape/MountGould-1.jpg" alt="Huge Majestic Mountain, Glacier National Park, Mount Gould, Montana, USA, Summer," data-title="Mount Gould, Glacier National Park Montana, 2025" data-spec="17&quot; x 22&quot; unsigned archival inkjet print" data-price="Price: $225" onclick="openLightbox(0)">
   </div>
   <div class="slide">
-    <img src="Landscape/GNP-4887.jpg" alt="Black and white, Landscape, Mountains, snow, lake, TSC Photography" onclick="openLightbox(1)">
+    <img src="Landscape/GNP-4887.jpg" alt="Black and white, Landscape, Mountains, snow, lake, TSC Photography" data-title="Two Medicine Upper, Glacier National Park Montana, 2025" data-spec="17&quot; x 22&quot; unsigned archival inkjet print" data-price="Price: $225" onclick="openLightbox(1)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-3.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(2)">
+    <img src="Hero/hero-3.jpg" alt="Featured photograph, TSC Photography" data-title="Untitled" data-spec="17&quot; x 22&quot; unsigned archival inkjet print" data-price="Price: $225" onclick="openLightbox(2)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-4.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(3)">
+    <img src="Hero/hero-4.jpg" alt="Featured photograph, TSC Photography" data-title="Untitled" data-spec="17&quot; x 22&quot; unsigned archival inkjet print" data-price="Price: $225" onclick="openLightbox(3)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-5.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(4)">
+    <img src="Hero/hero-5.jpg" alt="Featured photograph, TSC Photography" data-title="Untitled" data-spec="17&quot; x 22&quot; unsigned archival inkjet print" data-price="Price: $225" onclick="openLightbox(4)">
   </div>
   <div class="slide">
-    <img src="Hero/hero-6.jpg" alt="Featured photograph, TSC Photography" onclick="openLightbox(5)">
+    <img src="Hero/hero-6.jpg" alt="Featured photograph, TSC Photography" data-title="Untitled" data-spec="17&quot; x 22&quot; unsigned archival inkjet print" data-price="Price: $225" onclick="openLightbox(5)">
   </div>
 
   <div class="hero-content">
@@ -441,6 +475,12 @@ All Rights Reserved
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
   </div>
   <img id="lightbox-img" src="" alt="Full size view" onclick="event.stopPropagation()">
+  <div class="lightbox-caption" onclick="event.stopPropagation()">
+    <span id="lightbox-title"></span>
+    <span id="lightbox-spec"></span>
+    <span id="lightbox-price"></span>
+    <a href="print-shop.html" id="lightbox-order">Order Here</a>
+  </div>
   <div class="lightbox-arrow next" onclick="event.stopPropagation(); changeLightboxSlide(1)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
   </div>
@@ -481,10 +521,13 @@ All Rights Reserved
   });
 
   startAutoplay();
-    /* ---------- LIGHTBOX ---------- */
+    /* ---------- LIGHTBOX hero JS ---------- */
   const heroImages = Array.from(document.querySelectorAll('.slide img')).map(img => ({
     src: img.getAttribute('src'),
-    alt: img.getAttribute('alt')
+    alt: img.getAttribute('alt'),
+    title: img.getAttribute('data-title'),
+    spec: img.getAttribute('data-spec'),
+    price: img.getAttribute('data-price')
   }));
 
   let lightboxIndex = 0;
@@ -509,8 +552,12 @@ All Rights Reserved
   }
 
   function updateLightboxImage() {
-    lightboxImg.src = heroImages[lightboxIndex].src;
-    lightboxImg.alt = heroImages[lightboxIndex].alt;
+    const current = heroImages[lightboxIndex];
+    lightboxImg.src = current.src;
+    lightboxImg.alt = current.alt;
+    document.getElementById('lightbox-title').textContent = current.title;
+    document.getElementById('lightbox-spec').textContent = current.spec;
+    document.getElementById('lightbox-price').textContent = current.price;
   }
 
   lightbox.addEventListener('click', closeLightbox);
